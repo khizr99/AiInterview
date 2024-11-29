@@ -51,7 +51,7 @@
 //         {/* Video / Audio Recording */}
 //       </div>
 //    </div>
-    
+
 //   );
 // }
 
@@ -64,12 +64,14 @@ import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import QuestionsSection from "./_components/QuestionsSection";
 import RecordAnswerSection from "./_components/RecordAnswerSection";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 function StartInterview({ params }) {
   const [interviewData, setInterviewData] = useState();
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState([]);
   const [interviewId, setInterviewId] = useState(null);
-  const [activeQuestionIndex, setActiveQuestionIndex]=useState(0);
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
   // Extract interviewId from params
   useEffect(() => {
@@ -110,11 +112,29 @@ function StartInterview({ params }) {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Questions Section */}
-        <QuestionsSection mockInterviewQuestion={mockInterviewQuestion}
-        activeQuestionIndex={activeQuestionIndex} />
+        <QuestionsSection
+          mockInterviewQuestion={mockInterviewQuestion}
+          activeQuestionIndex={activeQuestionIndex}
+        />
         {/* Placeholder for Video / Audio Recording */}
 
-        <RecordAnswerSection/>
+        <RecordAnswerSection
+          mockInterviewQuestion={mockInterviewQuestion}
+          activeQuestionIndex={activeQuestionIndex}
+          interviewData={interviewData}
+        />
+      </div>
+
+      <div className="flex justify-end gap-6">
+        {activeQuestionIndex > 0 && <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex-1)} >Previous Question</Button>}
+        {activeQuestionIndex != mockInterviewQuestion?.length - 1 && (
+          <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex+1)}>Next Question</Button>
+        )}
+        {activeQuestionIndex === mockInterviewQuestion?.length - 1 && (
+          <Link href={'/dashboard/interview/'+interviewData?.mockId+"/feedback"}>
+          <Button >End Interview</Button>
+          </Link>
+        )}
       </div>
     </div>
   );
