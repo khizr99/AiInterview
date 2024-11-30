@@ -19,7 +19,7 @@ function QuestionsSection({ mockInterviewQuestion, activeQuestionIndex }) {
       {Array.isArray(mockInterviewQuestion) && mockInterviewQuestion.length > 0 ? (
         mockInterviewQuestion.map((item, index) => (
           <div key={index} className="mb-4">
-            <h2 className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center cursor-pointer ${activeQuestionIndex==index ? 'bg-blue-700 text-white' : ''}`}>Question #{index + 1}</h2>
+            <h2 className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center cursor-pointer ${activeQuestionIndex==index ? 'text-blue-800' : ''}`}>Question #{index + 1}</h2>
             
             {/* <p>{item.question}</p> */}
           </div>
